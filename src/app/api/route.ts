@@ -5,7 +5,7 @@ import axios from "axios"
 export async function GET(req: NextRequest) {
 	const count = await incrementViewCount()
 	const shortCount = shortNumber(count)
-
+	
 	const params = new URLSearchParams({
 		label: "Views",
 		logo: "github",

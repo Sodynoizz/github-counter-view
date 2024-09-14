@@ -14,20 +14,25 @@ const firebaseConfig = {
 	measurementId: process.env.MEASUREMENT_ID,
 }
 
-export async function incrementViewCount(): Promise<number> {
-	const app = initializeApp(firebaseConfig)
-	const db = getFirestore(app)
-	const docRef = doc(db, "stats", "views")
-	const docSnap = await getDoc(docRef)
-
-	if (docSnap.exists()) {
-		let count = docSnap.data().count
-		await setDoc(docRef, { count: count + 1 })
-		console.log(`Incremented count to ${count + 1}`)
-		return count + 1
-	} else {
-		await setDoc(docRef, { count: 1 })
-		return 1
+export async function incrementViewCount(): Promise<number>  {
+	try {
+		const app = initializeApp(firebaseConfig)
+		const db = getFirestore(app)
+		const docRef = doc(db, "stats", "views")
+		const docSnap = await getDoc(docRef)
+	
+		if (docSnap.exists()) {
+			let {count} = docSnap.data()
+			await setDoc(docRef, { count: count + 1 })
+			console.log(`Incremented count to ${count + 1}`)
+			return count + 1
+		} else {
+			await setDoc(docRef, { count: 1 })
+			return 1
+		}
+	} catch (error: unknown) {
+		console.error(error)
+		return 0
 	}
 }
 
