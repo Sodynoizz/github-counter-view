@@ -1,5 +1,8 @@
 ﻿import { initializeApp } from "firebase/app"
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
+import { config } from "dotenv"
+
+config()
 
 const firebaseConfig = {
 	apiKey: process.env.API_KEY,
@@ -21,6 +24,7 @@ export async function incrementViewCount(): Promise<number> {
 	if (docSnap.exists()) {
 		const count = docSnap.data().count
 		await setDoc(docRef, { count: count + 1 })
+		console.log(`Incremented count to ${count + 1}`)
 		return count + 1
 	} else {
 		await setDoc(docRef, { count: 1 })
