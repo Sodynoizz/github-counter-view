@@ -15,7 +15,7 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 export async function incrementViewCount(): Promise<number> {
-	const docRef = doc(db, "viewCounter", "views")
+	const docRef = doc(db, "stats", "views")
 	const docSnap = await getDoc(docRef)
 
 	if (docSnap.exists()) {
