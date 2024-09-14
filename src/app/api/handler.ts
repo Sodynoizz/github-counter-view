@@ -22,7 +22,7 @@ export async function incrementViewCount(): Promise<number> {
 	const docSnap = await getDoc(docRef)
 
 	if (docSnap.exists()) {
-		const count = docSnap.data().count
+		let count = docSnap.data().count
 		await setDoc(docRef, { count: count + 1 })
 		console.log(`Incremented count to ${count + 1}`)
 		return count + 1
